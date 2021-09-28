@@ -11,25 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.success {
-  color: black;
-  background: whitesmoke;
-  font-size: 20px;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: lightgreen;
-  margin-bottom: 15px;
-  padding: 10px;
-}
-
-.error {
-  color: red;
-  background: black;
-  font-size: 20px;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: red;
-  margin-bottom: 15px;
-  padding: 10px;
-}

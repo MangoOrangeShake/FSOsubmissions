@@ -3,10 +3,17 @@ import axios from 'axios';
 
 const App = () => {
 
-  const [countries, setCountries] = useState([])
+  const [countries, setCountries] = useState([
+    {name:
+      {common: 'Philippines'
+      }},
+    'wow'
+  ])
   const [search, setSearch] = useState('')
+  const [weatherData, setWeatherData] = useState({})
+  const api_key = process.env.REACT_APP_API_KEY
 
-  const hook = () => {
+  const fetchCountries = () => {
     axios
       .get(`https://restcountries.com/v3.1/all`)
       .then(response => {
@@ -14,39 +21,65 @@ const App = () => {
       })
   }
 
-  useEffect(hook, [])
+  useEffect(fetchCountries, [])
+
+  const countriesToShow = search ? countries.filter(country =>
+    country.name.common.toLowerCase().search(search.toLowerCase()) !== -1) : countries
+
+  const fetchWeather = () =>
+    axios
+      .get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${countriesToShow[0].name.common}`)
+      .then(response => {
+        setWeatherData(response.data)
+      })
+
+  useEffect(fetchWeather, [api_key, countriesToShow])
 
   const handleSearch = (event) => {
     setSearch(event.target.value)
     console.log(search);
   }
 
+  const handleShowEvent = (index) => {
+    setSearch(countriesToShow[index].name.common)
+  }
+
   return (
     <div>
-      <h1>data found in https://restcountries.com/v3.1/all</h1>
+      <h3>data found in https://restcountries.com/v3.1/all</h3>
       <div>
-        filter by country name<input value={search} onChange={handleSearch} />
+        filter by country name: <input value={search} onChange={handleSearch} />
       </div>
-      <Display countries={countries} search={search} />
+      <Display
+        countriesToShow={countriesToShow}
+        search={search}
+        showHandler={handleShowEvent}
+        weatherData={weatherData}
+      />
     </div>
   );
 }
 
-const Display = ({ countries, search }) => {
+const Display = ({ countriesToShow, search, showHandler, weatherData }) => {
 
-  const searchResults = search ? countries.filter(country =>
-    country.name.common.toLowerCase().search(search.toLowerCase()) !== -1) : countries
+  console.log(countriesToShow);
+  console.log(weatherData);
 
-  if (1 < searchResults.length && searchResults.length <= 10 && search) {
+  if (1 < countriesToShow.length && countriesToShow.length <= 10 && search) {
     return (
       <div>
-        {searchResults.map((country, i) =>
-          <p key={i}>{country.name.common}</p>)}
+        {countriesToShow.map((country, i) =>
+          <Country
+            key={i}
+            country={country}
+            eventHandler={() => showHandler(i)}
+          />
+        )}
       </div>
     )
   }
 
-  else if (searchResults.length > 10 && search) {
+  else if (countriesToShow.length > 10 && search) {
     return (
       <div>
         Too many matches, specify further.
@@ -54,18 +87,69 @@ const Display = ({ countries, search }) => {
     )
   }
 
-  else if (searchResults.length === 1 && search) {
+  else if (countriesToShow.length === 1) {
+    const countryObject = countriesToShow[0]
+
+    const lang = []
+    for (const eachLang in countryObject.languages) {
+      lang.push(countryObject.languages[eachLang]);
+    }
+
     return (
       <div>
-        {searchResults.map((country, i) =>
-          <h2 key={i}>{country.name.common}</h2>)}
+        <h2>{countryObject.name.common}</h2>
+        <p>capital: {countryObject.capital[0]}</p>
+        <p>area: {countryObject.area} square kilometers</p>
+        <h3>languages</h3>
+        <ul>
+          {lang.map((n, i) =>
+            <Language key={i} indivLang={n} />
+          )}
+        </ul>
+        <img
+          src={countryObject.flags.svg}
+          alt={`flag of ${countryObject.name.common}`}
+          height='150' />
+        <h3>Weather in {countryObject.name.common}</h3>
+        <p>temperature: {weatherData.current.temperature} degrees Celsius</p>
+        <img
+          src={weatherData.current.weather_icons[0]}
+          alt={`weather visual for ${countryObject.name.common}`}
+        />
+        <p>wind: {weatherData.current.weather_descriptions.wind_speed} mph direction {weatherData.current.weather_descriptions.wind_dir}</p>
+      </div>
+    )
+    
+  }
+
+  else if (countriesToShow.length === 0 && search) {
+    return (
+      <div>
+        No countries found.
       </div>
     )
   }
 
-  else if (!search) {
-    return <div></div>
-  }
+  return (
+    <div>
+      Search field empty or data still being fetched.
+    </div>
+  )
+}
+
+const Country = ({ country, eventHandler }) => {
+  return (
+    <p>
+      {country.name.common}
+      <button onClick={eventHandler}>show</button>
+    </p>
+  )
+}
+
+const Language = ({ indivLang }) => {
+  return (
+    <li>{indivLang}</li>
+  )
 }
 
 export default App;

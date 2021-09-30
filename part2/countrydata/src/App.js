@@ -3,12 +3,7 @@ import axios from 'axios';
 
 const App = () => {
 
-  const [countries, setCountries] = useState([
-    {name:
-      {common: 'Philippines'
-      }},
-    'wow'
-  ])
+  const [countries, setCountries] = useState([])
   const [search, setSearch] = useState('')
   const [weatherData, setWeatherData] = useState({})
   const api_key = process.env.REACT_APP_API_KEY
@@ -23,17 +18,10 @@ const App = () => {
 
   useEffect(fetchCountries, [])
 
+  console.log(countries);
+
   const countriesToShow = search ? countries.filter(country =>
     country.name.common.toLowerCase().search(search.toLowerCase()) !== -1) : countries
-
-  const fetchWeather = () =>
-    axios
-      .get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${countriesToShow[0].name.common}`)
-      .then(response => {
-        setWeatherData(response.data)
-      })
-
-  useEffect(fetchWeather, [api_key, countriesToShow])
 
   const handleSearch = (event) => {
     setSearch(event.target.value)
@@ -55,15 +43,22 @@ const App = () => {
         search={search}
         showHandler={handleShowEvent}
         weatherData={weatherData}
+        setWeatherData={setWeatherData}
+        api_key={api_key}
       />
     </div>
   );
 }
 
-const Display = ({ countriesToShow, search, showHandler, weatherData }) => {
+const Display = ({ countriesToShow, search, showHandler, weatherData, setWeatherData, api_key }) => {
 
-  console.log(countriesToShow);
-  console.log(weatherData);
+  // useEffect(() =>
+  //   axios
+  //     .get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${countriesToShow[0].name.common}`)
+  //     .then(response => {
+  //       setWeatherData(response.data)
+  //     }), [search])
+  // console.log(weatherData);
 
   if (1 < countriesToShow.length && countriesToShow.length <= 10 && search) {
     return (
@@ -87,7 +82,8 @@ const Display = ({ countriesToShow, search, showHandler, weatherData }) => {
     )
   }
 
-  else if (countriesToShow.length === 1) {
+  else if (countriesToShow.length === 1 && search) {
+
     const countryObject = countriesToShow[0]
 
     const lang = []
@@ -111,15 +107,15 @@ const Display = ({ countriesToShow, search, showHandler, weatherData }) => {
           alt={`flag of ${countryObject.name.common}`}
           height='150' />
         <h3>Weather in {countryObject.name.common}</h3>
-        <p>temperature: {weatherData.current.temperature} degrees Celsius</p>
+        {/* <p>temperature: {weatherData.current.temperature} degrees Celsius</p>
         <img
           src={weatherData.current.weather_icons[0]}
           alt={`weather visual for ${countryObject.name.common}`}
         />
-        <p>wind: {weatherData.current.weather_descriptions.wind_speed} mph direction {weatherData.current.weather_descriptions.wind_dir}</p>
+        <p>wind: {weatherData.current.wind_speed} mph direction {weatherData.current.wind_dir}</p> */}
       </div>
     )
-    
+
   }
 
   else if (countriesToShow.length === 0 && search) {

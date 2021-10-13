@@ -1,0 +1,19 @@
+GET http://localhost:3001/info
+
+###
+
+GET http://localhost:3001/api/persons/3
+
+###
+
+DELETE http://radiant-plateau-76557.herokuapp.com/api/persons/4269
+
+###
+
+POST http://radiant-plateau-76557.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "name": "marblesharblelarble", 
+    "number": "721212121"
+}

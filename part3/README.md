@@ -1,5 +1,7 @@
 ## Note
 
+**IMPORTANT**: This is not the git repository that is deployed to Heroku. Either visit the given link below, or, download the directory, install all dependencies, then run "npm run dev" to run the backend on your local machine. The code already includes a working UI via the frontend production build. 
+
 All applications are in their final forms based on their respective last exercises.
 
 For the list of exercises, kindly refer to https://fullstackopen.com/en/part3.

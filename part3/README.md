@@ -20,4 +20,4 @@ For the list of exercises, kindly refer to https://fullstackopen.com/en/part3.
 
 ## The link to the deployed Heroku App for the phonebook is:
 
-radiant-plateau-76557.herokuapp.com/
+https://radiant-plateau-76557.herokuapp.com/

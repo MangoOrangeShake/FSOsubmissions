@@ -17,7 +17,7 @@ For the list of exercises, kindly refer to https://fullstackopen.com/en/part3.
 * For the backend, it's as if we are recreating some of the functionality of the *json-server* npm package that we relied on in part 2. This puts into perspective what really goes into designing a backend.
 * The most challenging part of these exercises is the communication that goes on within the frontend and the backend, and within the backend and the database. We are simply passing JSON objects/elements typed in by the user, into the route handlers of the backend, then into a BSON object/element (which is compatible with the MongoDB database).
 * Lastly, we also learn about application deployment. This then implies that we have been working on a production build, which needs to be finalized into a functional application that can be deployed to the internet. I learned that it is another intricate process not to be overlooked. There is also the nuance of adding a frontend production build to the backend so that the Heroku application can display the UI of the app.
-
+* Update (11/08/21): Added the de-minified version of the frontend to track changes such as adding the validation error message whenever updating a name with an invalid entry (name shorter than 3 characters and/or number shorter than 8 characters)
 ## The link to the deployed Heroku App for the phonebook is:
 
 https://radiant-plateau-76557.herokuapp.com/

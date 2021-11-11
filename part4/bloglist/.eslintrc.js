@@ -3,6 +3,7 @@ module.exports = {
     commonjs: true,
     es2021: true,
     node: true,
+    jest: true,
   },
   extends: [
     'airbnb-base',
@@ -13,8 +14,5 @@ module.exports = {
   rules: {
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
-    'no-console': 'off',
-    'consistent-return': 'off',
-    'arrow-parens': ['error', 'as-needed'],
   },
 };

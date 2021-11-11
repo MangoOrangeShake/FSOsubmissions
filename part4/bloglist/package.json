@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
+    "lint": "eslint .",
+    "lintfix": "eslint . --fix",
     "dev": "nodemon index.js"
   },
   "author": "CJ Paguia",
@@ -15,6 +17,7 @@
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.15"
   },
   "dependencies": {

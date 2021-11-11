@@ -14,5 +14,6 @@ module.exports = {
   rules: {
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
+    'arrow-parens': ['error', 'as-needed'],
   },
 };

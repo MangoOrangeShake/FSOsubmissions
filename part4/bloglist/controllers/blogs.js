@@ -4,7 +4,7 @@ const Blog = require('../models/blog');
 blogsRouter.get('/', (request, response) => {
   Blog
     .find({})
-    .then((blogs) => {
+    .then(blogs => {
       response.json(blogs);
     });
 });
@@ -14,7 +14,7 @@ blogsRouter.post('/', (request, response) => {
 
   blog
     .save()
-    .then((result) => {
+    .then(result => {
       response.status(201).json(result);
     });
 });

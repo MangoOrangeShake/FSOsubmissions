@@ -15,5 +15,6 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
     'arrow-parens': ['error', 'as-needed'],
+    'prefer-destructuring': 'off',
   },
 };
